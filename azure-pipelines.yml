@@ -9,24 +9,23 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 strategy:
-  matrix:
-    Python279:
-      python.version: '2.7.9'
-    Python35:
-      python.version: '3.5'
+ matrix:
+      Python27:
+        python.version: '2.7'
+      Python35:
+        python.version: '3.5'
+      Python36:
+        python.version: '3.6'
+      Python37:
+        python.version: '3.7'
+ steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python $(python.version)'
+    inputs:
+      versionSpec: '$(python.version)'
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+  - script: pip install tox
+    displayName: 'Install Tox'
 
-- script: |
-    python -m pip install --upgrade pip
-  displayName: 'Install dependencies'
-
-- script: pip install tox
-  displayName: 'Install Tox'
-
-- script: tox
-  displayName: 'Run Tox'
+  - script: tox -e py
+    displayName: 'Run Tox'
