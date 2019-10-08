@@ -14,10 +14,6 @@ strategy:
       python.version: '2.7'
     Python35:
       python.version: '3.5'
-    Python36:
-      python.version: '3.6'
-    Python37:
-      python.version: '3.7'
 
 steps:
 - task: UsePythonVersion@0
@@ -28,11 +24,6 @@ steps:
 - script: |
     python -m pip install --upgrade pip
   displayName: 'Install dependencies'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
 
 - script: pip install tox
   displayName: 'Install Tox'
